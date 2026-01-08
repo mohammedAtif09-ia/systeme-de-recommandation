@@ -1,32 +1,32 @@
-# 🎬 Système de Recommandation basé sur les Embeddings de Modèles de Langage
+# Système de Recommandation basé sur les Embeddings de Modèles de Langage
 
 Projet de système de recommandation utilisant les embeddings de modèles de langage (Sentence-BERT) combinés à un **mécanisme d'attention** et un **apprentissage contrastif (BPR Loss)** pour améliorer les recommandations.
 
-## 📋 Description du Projet
+## Description du Projet
 
 Ce projet implémente un système de recommandation innovant qui combine:
 - **Embeddings de modèles de langage** (Sentence-BERT `all-MiniLM-L6-v2`) pour capturer la sémantique des items
-- **Mécanisme d'Attention learnable** ⚡ pour pondérer l'importance des items dans le profil utilisateur
+- **Mécanisme d'Attention learnable**  pour pondérer l'importance des items dans le profil utilisateur
 - **Apprentissage contrastif** avec BPR Loss pour optimiser le ranking
 - **Comparaison avec Matrix Factorization** comme baseline
 
-## 🏆 Résultats
+## Résultats
 
 | Modèle | Recall@10 | NDCG@10 | Amélioration |
 |--------|-----------|---------|--------------|
 | Matrix Factorization | 0.0141 | 0.0438 | - |
-| **ContrastiveAttention** | **0.0380** | **0.1002** | **+159% / +106%** |
+| **ContrastiveAttention** | **0.0377** | **0.0960** | **+159% / +106%** |
 
 ### Architecture du Modèle Principal
 
-#### `ContrastiveAttentionRecommender` ⚡
+#### `ContrastiveAttentionRecommender` 
 1. **Encode les textes** (titre + genres) avec Sentence-BERT → 384 dimensions
 2. **Mécanisme d'attention multi-head** pour pondérer les items du profil utilisateur
 3. **Apprentissage par BPR Loss** : maximise le score des items positifs vs négatifs
 4. **Negative Sampling** : 10 négatifs par positif avec pondération inverse à la popularité
 5. **Interprétable** : `explain_recommendation()` pour visualiser les poids d'attention
 
-## 🎯 Objectifs
+## Objectifs
 
 - Développer un système de recommandation basé sur les embeddings de modèles de langage
 - Utiliser un mécanisme d'attention pour apprendre les poids des items
@@ -34,7 +34,7 @@ Ce projet implémente un système de recommandation innovant qui combine:
 - Comparer avec Matrix Factorization comme baseline
 - Évaluer avec **Recall@10** et **NDCG@10**
 
-## 📊 Dataset
+## Dataset
 
 - **Source**: MovieLens 1M (téléchargé automatiquement via Cornac)
 - **Contenu**: ~1M ratings, 6040 utilisateurs, 3675 items avec texte
@@ -42,14 +42,14 @@ Ce projet implémente un système de recommandation innovant qui combine:
 - **Split**: 80% train / 20% test (ratio-split)
 - **Threshold**: Interactions positives si rating ≥ 3.5
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 système de recom/
 ├── models/                                # Modèles de recommandation
 │   ├── __init__.py
 │   ├── embedding_recommender.py           # Modèle baseline par embeddings
-│   └── attention_recommender_v3.py        # ⚡ Modèle principal avec attention + BPR
+│   └── attention_recommender_v3.py        # Modèle principal avec attention + BPR
 ├── results/                               # Résultats d'évaluation (JSON)
 ├── data_loader.py                         # Chargement MovieLens 1M
 ├── evaluate.py                            # Script d'évaluation et comparaison
@@ -57,7 +57,7 @@ système de recom/
 └── README.md                              # Ce fichier
 ```
 
-## 🚀 Installation
+## Installation
 
 ### 1. Cloner le projet
 
@@ -87,7 +87,7 @@ pip install -r requirements.txt
 - `torch>=2.0.0` - Backend PyTorch
 - `numpy`, `pandas`, `scikit-learn` - Outils data science
 
-## 📖 Utilisation
+## Utilisation
 
 ### Exécuter l'évaluation complète
 
@@ -119,7 +119,7 @@ ContrastiveAttentionRecommender(
 )
 ```
 
-## 📈 Métriques d'Évaluation
+## Métriques d'Évaluation
 
 ### Recall@10
 Proportion des items pertinents (aimés par l'utilisateur) retrouvés dans le top-10 des recommandations.
@@ -133,14 +133,14 @@ $$\text{NDCG@k} = \frac{DCG@k}{IDCG@k}$$
 
 où $DCG@k = \sum_{i=1}^{k} \frac{2^{rel_i} - 1}{\log_2(i+1)}$
 
-## 🔬 Modèles Comparés
+## Modèles Comparés
 
 ### 1. Matrix Factorization (Baseline)
 - Modèle baseline classique de filtrage collaboratif
 - Factorise la matrice user-item en matrices latentes
 - Paramètres: k=50, learning_rate=0.01, max_iter=100
 
-### 2. ContrastiveAttentionRecommender ⚡ (Notre solution)
+### 2. ContrastiveAttentionRecommender (Notre solution)
 - **Sentence-BERT** (`all-MiniLM-L6-v2`) pour encoder les textes
 - **Attention multi-head** pour pondérer les items du profil utilisateur
 - **BPR Loss** + Margin Loss pour l'apprentissage contrastif
@@ -148,7 +148,7 @@ où $DCG@k = \sum_{i=1}^{k} \frac{2^{rel_i} - 1}{\log_2(i+1)}$
 - **LR Scheduler** (StepLR) pour stabiliser l'entraînement
 - Supporte GPU si disponible (détection automatique)
 
-## 💡 Avantages de l'Approche
+## Avantages de l'Approche
 
 1. **Cold Start**: Peut recommander de nouveaux items avec texte (titre + genres)
 2. **Interprétabilité**: `explain_recommendation()` montre quels films ont influencé la recommandation
@@ -156,7 +156,7 @@ où $DCG@k = \sum_{i=1}^{k} \frac{2^{rel_i} - 1}{\log_2(i+1)}$
 4. **Apprentissage Contrastif**: BPR Loss optimise directement le ranking
 5. **Attention Learnable**: Le modèle apprend quels items comptent le plus
 
-## 📊 Exemple de Sortie
+## Exemple de Sortie
 
 ```
 ================================================================================
@@ -165,11 +165,11 @@ RÉSULTATS COMPARATIFS - MovieLens 1M
 
 Modèle                          Recall@10    NDCG@10      Precision@10
 --------------------------------------------------------------------------------
-MatrixFactorization             0.0141       0.0438       0.0098
-ContrastiveAttention            0.0380       0.1002       0.0265
+MatrixFactorization             0.0141       0.0438       0.0422
+ContrastiveAttention            0.0377       0.0960       0.0826
 
 ================================================================================
-🏆 Meilleur modèle: ContrastiveAttention
+ Meilleur modèle: ContrastiveAttention
    Recall@10: +159% vs MF | NDCG@10: +106% vs MF
 ================================================================================
 
@@ -180,7 +180,7 @@ Epoch 20/40, Loss: 0.6545
 Epoch 40/40, Loss: 0.6449
 ```
 
-## 🔧 Configuration Avancée
+##  Configuration Avancée
 
 ### Changer de modèle d'embeddings
 
@@ -216,7 +216,7 @@ export CUDA_VISIBLE_DEVICES=""
 python evaluate.py
 ```
 
-## 📝 Fichiers Principaux
+## Fichiers Principaux
 
 | Fichier | Description |
 |---------|-------------|
@@ -226,7 +226,7 @@ python evaluate.py
 | [evaluate.py](evaluate.py) | Script d'évaluation et comparaison |
 | [requirements.txt](requirements.txt) | Dépendances Python |
 
-## 🐛 Dépannage
+##  Dépannage
 
 ### Erreur CUDA / GPU
 Le modèle détecte automatiquement CUDA. Pour forcer CPU:
@@ -244,7 +244,7 @@ ContrastiveAttentionRecommender(batch_size=128)
 ### Téléchargement des données échoue
 Les données MovieLens sont téléchargées dans `~/.cornac/ml-1m/`. Vérifiez votre connexion.
 
-## 📚 Références
+##  Références
 
 - [Cornac Framework](https://cornac.readthedocs.io/) - Framework de recommandation
 - [Sentence-Transformers](https://www.sbert.net/) - Embeddings BERT
@@ -252,11 +252,11 @@ Les données MovieLens sont téléchargées dans `~/.cornac/ml-1m/`. Vérifiez v
 - Rendle et al., "BPR: Bayesian Personalized Ranking from Implicit Feedback" (2009)
 - Vaswani et al., "Attention Is All You Need" (2017)
 
-## 👨‍💻 Auteur
+##  Auteur
 
 Mohammed Atif - Projet de système de recommandation basé sur les embeddings de modèles de langage.
 
-## 📄 License
+##  License
 
 Ce projet est à usage éducatif.
 
