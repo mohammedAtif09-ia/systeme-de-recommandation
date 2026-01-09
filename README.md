@@ -255,7 +255,7 @@ Les données MovieLens sont téléchargées dans `~/.cornac/ml-1m/`. Vérifiez v
 ##  Auteur
 
 - ABID Meryem 
-- Ateef Mohamed  
+- Atif Mohammed  
 - Aouari Nassima
 - EL-HYANI Ayyoub
 - Grich Mohamed
