@@ -254,7 +254,12 @@ Les données MovieLens sont téléchargées dans `~/.cornac/ml-1m/`. Vérifiez v
 
 ##  Auteur
 
-Mohammed Atif - Projet de système de recommandation basé sur les embeddings de modèles de langage.
+ABID Meryem
+Ateef Mohamed
+Aouari Nassima
+EL-HYANI Ayyoub
+Grich Mohamed
+
 
 ##  License
 
